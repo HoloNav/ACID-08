@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#141a16"><meta name="description" content="ACID-08 — an original standalone acid bass and drum groovebox.">
+  <link rel="icon" type="image/png" href="assets/icons/icon-192.png"><link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="css/main.css"><link rel="stylesheet" href="css/layout.css"><link rel="stylesheet" href="css/controls.css"><link rel="stylesheet" href="css/sequencer.css"><link rel="stylesheet" href="css/responsive.css">
+  <title>ACID-08 | Acid Groovebox</title>
+</head>
+<body>
+<div class="device">
+  <header class="topbar panel">
+    <div class="identity"><div class="identity-mark">08<span>•</span></div><div><strong>ACID<span>-08</span></strong><small>ANALOG-INSPIRED GROOVE MACHINE <em>V1.0</em></small></div></div>
+    <div class="transport-group"><button id="power" class="power-button control-button" aria-label="Start audio engine" title="Initialize sound">⏻ <span>POWER</span></button><button id="play" class="control-button play" title="Start playback">▶ PLAY</button><button id="stop" class="control-button" title="Stop playback">■ STOP</button><button id="test-tone" class="control-button subtle" title="Audition acid synthesizer">♪ TEST</button></div>
+    <div class="tempo-area"><button id="bpm-minus" class="tiny" aria-label="Decrease BPM">−</button><div class="tempo-view"><small>TEMPO</small><input id="bpm" type="number" value="126" min="60" max="240" aria-label="Tempo in BPM"><span>BPM</span></div><button id="bpm-plus" class="tiny" aria-label="Increase BPM">+</button><button id="tap-tempo" class="control-button subtle">TAP</button></div>
+    <div class="file-group"><button id="save-project" class="control-button subtle" title="Save named project">SAVE</button><button id="load-project" class="control-button subtle" title="Load named project">LOAD</button><button id="export-wav" class="control-button export" title="Render four bars of current pattern">↓ WAV</button><button id="more" class="control-button subtle" title="JSON and help">⋮</button></div>
+  </header>
+  <div class="status-strip"><div class="engine-led" id="engine-led"></div><span id="engine-status">ENGINE OFFLINE — TAP POWER OR PLAY TO ENABLE AUDIO</span><span class="status-right"><span id="storage-state">SAVE: CHECKING</span> <span class="divider-dot">·</span> <span id="project-name">ACID-08 Demo</span></span></div>
+  <main class="workspace">
+    <section class="panel synth-panel"><div class="panel-header"><div><span class="section-number">01 /</span><h2>ACID BASS</h2></div><div class="panel-header-right"><span class="status-pill">MONO / RESONANT</span><span class="light led-lime"></span></div></div>
+      <div class="mode-bar"><span class="micro-label">VCO WAVE</span><div class="choice" id="wave-choice"><button data-wave="saw" class="active">╱╱ SAW</button><button data-wave="square">▁▔ PULSE</button></div><span class="micro-label">FILTER</span><div class="choice" id="filter-choice"><button data-filter="lowpass" class="active">LPF</button><button data-filter="bandpass">BPF</button></div></div>
+      <div id="synth-knobs" class="knob-grid"></div><div class="synth-footer"><span>ACID VOICE / VCF + ENV + ACCENT + GLIDE</span><span>◈ HIGH RES CONTROL</span></div>
+    </section>
+    <section class="panel sequencer-panel"><div class="panel-header"><div><span class="section-number">02 /</span><h2>STEP SEQUENCER</h2></div><div class="panel-header-right"><span class="status-pill">32 STEPS / 7 TRACKS</span><span id="position-readout" class="position">-- : --</span></div></div>
+      <div class="pattern-bar"><div class="pattern-caption"><span class="micro-label">PATTERN BANK</span><span id="pattern-info">A01</span></div><div id="pattern-slots" class="pattern-slots"></div></div>
+      <div class="step-top"><span class="micro-label">ACTIVE TRACK</span><div class="page-buttons"><button id="page-1" class="active">01 — 16</button><button id="page-2">17 — 32</button></div></div>
+      <div id="track-selectors" class="track-selectors"></div>
+      <div class="step-grid-frame"><div id="step-grid" class="step-grid" role="group" aria-label="Sixteen sequence steps"></div><div id="step-ruler" class="step-ruler"></div></div>
+      <div class="editor" id="step-editor"><div class="editor-header"><span id="selected-step-title">BASS / STEP 01</span><span id="step-note-readout">C2</span></div>
+        <div class="step-properties"><button id="step-on" class="toggle-button">● ENABLE</button><button id="accent" class="toggle-button">ACCENT</button><button id="slide" class="toggle-button">SLIDE ↗</button><button id="tie" class="toggle-button">TIE ─</button><label id="prob-label" class="prob-control" hidden>PROBABILITY <input type="range" id="probability" min="0" max="100" step="5" value="100"><output id="prob-value">100%</output></label></div>
+        <div id="keyboard-section" class="keyboard-section"><div class="keyboard-caption"><span>NOTE ASSIGNMENT — TAP A KEY</span><div class="octave-setting"><button id="octave-down" aria-label="Octave down">−</button><strong id="octave-display">OCT 2</strong><button id="octave-up" aria-label="Octave up">+</button></div></div><div id="keyboard" class="keyboard"></div></div>
+      </div>
+      <div class="overview-panel"><div class="overview-caption"><span>PATTERN OVERVIEW / ALL TRACKS</span><span>SELECT A CELL TO EDIT</span></div><div id="overview" class="overview"></div></div>
+    </section>
+    <section class="panel drum-panel"><div class="panel-header"><div><span class="section-number">03 /</span><h2>DRUM MACHINE</h2></div><div class="panel-header-right"><span class="status-pill">6 SYNTH VOICES</span></div></div><div id="drum-pads" class="drum-pads"></div></section>
+    <section class="panel mix-panel"><div class="panel-header"><div><span class="section-number">04 /</span><h2>MIXER & EFFECTS</h2></div><div class="panel-header-right"><span class="status-pill">STEREO BUS</span></div></div>
+      <div class="mix-controls"><label class="range-stack">MASTER LEVEL <input id="master-level" type="range" min="0" max="1" step="0.01" value="0.77"><output id="master-val">77%</output></label><label class="range-stack">STEREO DELAY <input id="delay-send" type="range" min="0" max="1" step="0.01" value="0.16"><output id="delay-val">16%</output></label><label class="range-stack">REVERB SEND <input id="reverb-send" type="range" min="0" max="1" step="0.01" value="0.13"><output id="reverb-val">13%</output></label><label class="range-stack">SWING <input id="swing" type="range" min="0" max="45" step="1" value="9"><output id="swing-val">9%</output></label></div>
+      <div class="mute-row"><button id="bass-mute" class="toggle-button">BASS MUTE</button><button id="drum-mute" class="toggle-button">DRUM MUTE</button><button id="metronome" class="toggle-button">METRONOME</button></div><p class="mix-footnote">MASTER BUS → SOFT SATURATION → DYNAMICS → STEREO OUTPUT</p></section>
+  </main>
+  <footer class="footer"><span>ACID-08 <em>★</em> HAND-CODED SYNTHESIS</span><span id="bottom-message">TIP: SELECT A STEP, THEN TAP A NOTE TO PROGRAM THE BASS.</span><span>44.1K / WAV 16-BIT / OFFLINE</span></footer>
+</div>
+<div id="modal" class="modal-backdrop" hidden><div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal-top"><h2 id="modal-title">PROJECT LIBRARY</h2><button id="modal-close" class="tiny">✕</button></div><div id="modal-body"></div></div></div>
+<input id="json-file" type="file" accept=".json,application/json" hidden>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
