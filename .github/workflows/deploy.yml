@@ -30,7 +30,7 @@ jobs:
       - name: Unpack ACID-08
         run: |
           mkdir -p _site _unpacked
-          unzip -q ACID-08-v1.3.2-PWA-Source.zip -d _unpacked
+          unzip -q ACID-08-v1.3.3-PWA-Source.zip -d _unpacked
           test -f _unpacked/ACID-08/index.html
           cp -a _unpacked/ACID-08/. _site/
 
